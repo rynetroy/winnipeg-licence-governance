@@ -52,6 +52,8 @@ City open data API ──► ingest_api.py ──► dated raw snapshot (local o
 
 Reports show counts only. Raw data is not stored in this repo; see [data/README.md](data/README.md).
 
+Governance: [charter](governance/charter.md), [RACI](governance/raci.md) and [decision log](governance/decision_log.md).
+
 ## Run it
 
 ```
@@ -67,8 +69,8 @@ python src/profile_extract.py data/raw/api_YYYYMMDD YYYY-MM-DD
 | Profiling and snapshot comparison | Data Quality | Done |
 | API ingestion with immutable snapshots | Data Integration | Done (first version) |
 | Data dictionary | Metadata Management | Done |
-| Governance charter and RACI | Data Governance | Next |
-| Quality rules, scorecard, issue log | Data Quality | Planned |
+| Governance charter, RACI, decision log | Data Governance | Done (v0.1) |
+| Quality rules, scorecard, issue log | Data Quality | Next |
 | Business glossary and lineage diagram | Metadata Management | Phase 2 |
 | Reference codes and golden record matching | Reference & Master Data | Phase 2 |
 | Field classification and access matrix | Data Security | Phase 2 |
