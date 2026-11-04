@@ -1,0 +1,14 @@
+canonical_name,csv_header,api_field,api_data_type,notes
+folder_type,Folder Type,folder_type,text,Licence family code (LP / LQ / LR / LX)
+folder_description,Folder Description,folder_description,text,Label for folder_type
+subdescription,Subdescription,subdescription,text,Licensed activity
+trade_name,Trade Name,trade_name,text,"'(none)' used as placeholder for no trade name"
+address,Address,address,text,Blank for rooming houses (LX) in both sources; API omits the field instead of sending blank
+issue_date,Issue Date,issue_date,calendar_date,"CSV: '2023 May 10 12:00:00 AM'; API: '2023-05-10T00:00:00.000'"
+expiry_date,Expiry Date,expiry_date,calendar_date,Same formats as issue_date
+status,Status,status,text,Licence status
+neighbourhood_number,Neighbourhood Number,neighbourhood_number,number,Stored as text in both raw sources
+neighbourhood_name,Neighbourhood Name,neighbourhood_name,text,
+electoral_ward,Electoral Ward,electoral_ward,text,
+community_characterization_area,Community Characterization Area,community_characterization_area,text,Used to define 'Downtown'
+location,Location,location,text,WKT point 'POINT (lon lat)'; omitted by API when blank
