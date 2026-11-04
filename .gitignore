@@ -1,0 +1,16 @@
+﻿# Secrets: never commit
+.env
+
+# Raw data stays local (decision, Nov 4 2026). The November API snapshot
+# includes addresses and some names for personal services licences, so the
+# repo publishes code and count-only reports, not the raw records.
+# See data/README.md for how to get the data.
+data/raw/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
