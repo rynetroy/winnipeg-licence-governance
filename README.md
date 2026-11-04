@@ -10,6 +10,8 @@
 
 **2. In April 2026, a naive downtown count was about 18 times too high.**
 
+![Downtown licences counted as active, rule by rule: April 621, 322, 34; November 234, 197, 196](reports/figures/downtown_funnel.png)
+
 | Downtown licences | April 4, 2026 | November 4, 2026 |
 |---|---:|---:|
 | Status = "Issued" | 621 | 234 |
@@ -48,6 +50,7 @@ City open data API ──► ingest_api.py ──► dated raw snapshot (local o
 - `src/load_snapshot.py` reads either the API snapshot or a CSV export into one standard format, using `metadata/field_mapping.csv`.
 - `src/profile_extract.py` profiles one snapshot.
 - `src/compare_snapshots.py` compares two snapshots.
+- `src/make_figures.py` draws the funnel chart from the same function the comparison report uses.
 - `src/build_data_dictionary.py` builds the [data dictionary](metadata/data_dictionary.md) from hand-written definitions plus figures computed from a snapshot.
 
 Reports show counts only. Raw data is not stored in this repo; see [data/README.md](data/README.md).
