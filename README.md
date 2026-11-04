@@ -48,6 +48,7 @@ City open data API ──► ingest_api.py ──► dated raw snapshot (local o
 - `src/load_snapshot.py` reads either the API snapshot or a CSV export into one standard format, using `metadata/field_mapping.csv`.
 - `src/profile_extract.py` profiles one snapshot.
 - `src/compare_snapshots.py` compares two snapshots.
+- `src/build_data_dictionary.py` builds the [data dictionary](metadata/data_dictionary.md) from hand-written definitions plus figures computed from a snapshot.
 
 Reports show counts only. Raw data is not stored in this repo; see [data/README.md](data/README.md).
 
@@ -65,8 +66,8 @@ python src/profile_extract.py data/raw/api_YYYYMMDD YYYY-MM-DD
 |---|---|---|
 | Profiling and snapshot comparison | Data Quality | Done |
 | API ingestion with immutable snapshots | Data Integration | Done (first version) |
-| Data dictionary | Metadata Management | Next |
-| Governance charter and RACI | Data Governance | Planned |
+| Data dictionary | Metadata Management | Done |
+| Governance charter and RACI | Data Governance | Next |
 | Quality rules, scorecard, issue log | Data Quality | Planned |
 | Business glossary and lineage diagram | Metadata Management | Phase 2 |
 | Reference codes and golden record matching | Reference & Master Data | Phase 2 |
