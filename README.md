@@ -8,11 +8,11 @@
 
 **1. The data can't count downtown businesses in general.** The City licenses only a short list of activities (used goods and precious metal dealers, rooming houses and similar). A restaurant or an office will never appear in this dataset. Any "downtown business count" built on it measures licensed activities only.
 
-**2. In April 2026, a naive downtown count was about 18 times too high.**
+**2. In April 2026, a naive count for the Downtown planning area was about 18 times too high.** (The licence data's "Downtown" planning area covers downtown and surrounding neighbourhoods; see finding 4.)
 
-![Downtown licences counted as active, rule by rule: April 621, 322, 34; November 234, 197, 196](reports/figures/downtown_funnel.png)
+![Licences counted as active in the Downtown planning area, rule by rule: April 621, 322, 34; November 234, 197, 196](reports/figures/downtown_funnel.png)
 
-| Downtown licences | April 4, 2026 | November 4, 2026 |
+| Downtown planning area licences | April 4, 2026 | November 4, 2026 |
 |---|---:|---:|
 | Status = "Issued" | 621 | 234 |
 | ...after removing exact duplicate rows | 322 | 197 |
@@ -29,9 +29,24 @@ In April, 1,655 records across the city still said "Issued" after their expiry d
 
 The same dataset ID gave a very different answer seven months apart. Whether the data can be trusted depends on the day it was pulled, and nothing on the portal documents the changes.
 
+**4. The City's own downtown has almost none of these licences.** The licence data's "Downtown" planning area is wider than downtown. CentrePlan 2050, the City's downtown plan bylaw, draws a much tighter boundary. Of November's 196 active licences in the planning area:
+
+| Area | Active, Nov 2026 |
+|---|---:|
+| Downtown, as defined by CentrePlan 2050 (11 neighbourhoods) | 5 |
+| Partly downtown (West Broadway, West Alexander, Centennial) | 103 |
+| Surrounding neighbourhoods (Spence, Daniel McIntyre, St. Matthews, Armstrong Point, Logan-C.P.R.) | 88 |
+
+187 of the 196 were rooming houses. Four neighbourhoods inside downtown, including Portage & Main, have no licence records at all, because nothing there holds one of the City's licensed activities.
+
+![Map of downtown Winnipeg and surrounding neighbourhoods, with the CentrePlan 2050 downtown outlined and bars showing active licences in April and November 2026](reports/figures/downtown_map.png)
+
+Exact numbers by neighbourhood: [chart](reports/figures/downtown_by_neighbourhood.png) and [table](reports/downtown_by_neighbourhood.csv). Group membership: [downtown_definitions.csv](metadata/downtown_definitions.csv).
+
 **Not yet proven (NEEDS EVIDENCE):**
 - Why the April duplicates existed. With no licence number in the data, an exact duplicate can't be confirmed as an error. Rooming house addresses are redacted, so separate rooming houses can look identical.
 - Whether the remaining rooming house duplicates are errors or distinct licences.
+- The exact CentrePlan 2050 boundary. Neighbourhoods were matched to the plan's published map by eye; Logan-C.P.R. is the least certain. A GIS file of the boundary would confirm it.
 
 ## How it works
 
@@ -51,6 +66,7 @@ City open data API ──► ingest_api.py ──► dated raw snapshot (local o
 - `src/profile_extract.py` profiles one snapshot.
 - `src/compare_snapshots.py` compares two snapshots.
 - `src/make_figures.py` draws the funnel chart from the same function the comparison report uses.
+- `src/make_map.py` joins licences to neighbourhood boundaries by name, groups neighbourhoods using `metadata/downtown_definitions.csv`, and draws the map and ranked chart (neighbourhood totals only).
 - `src/build_data_dictionary.py` builds the [data dictionary](metadata/data_dictionary.md) from hand-written definitions plus figures computed from a snapshot.
 
 Reports show counts only. Raw data is not stored in this repo; see [data/README.md](data/README.md).

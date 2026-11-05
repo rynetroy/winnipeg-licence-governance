@@ -3,3 +3,4 @@ duckdb
 tabulate
 requests
 matplotlib
+shapely
