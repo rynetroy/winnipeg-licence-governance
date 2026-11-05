@@ -64,13 +64,13 @@ def main(old_path, old_date, new_path, new_date):
     axes[0].set_yticks(range(len(STEPS)), STEPS, color=INK)
     axes[0].invert_yaxis()  # axes share y, so flip once: first rule on top
 
-    fig.suptitle("Downtown licences counted as active, rule by rule",
+    fig.suptitle("Licences counted as active in the Downtown planning area, rule by rule",
                  x=0.012, ha="left", color=INK, fontsize=14, fontweight="bold")
     fig.text(0.012, 0.86, "Same dataset, two snapshots seven months apart. "
              "Each bar applies one more rule than the bar above it.",
              ha="left", color=INK_2, fontsize=10)
     fig.text(0.012, 0.02, "Source: City of Winnipeg Open Data, Business Licenses (d5k3-sfzx). "
-             "Downtown = community characterization area 'Downtown'. "
+             "Downtown planning area = community characterization area 'Downtown' (downtown and surrounding neighbourhoods). "
              "Personal project, not affiliated with the City.",
              ha="left", color=INK_2, fontsize=8)
     fig.tight_layout(rect=(0, 0.05, 1, 0.86))
