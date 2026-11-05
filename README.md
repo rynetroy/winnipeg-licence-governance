@@ -48,6 +48,30 @@ Exact numbers by neighbourhood: [chart](reports/figures/downtown_by_neighbourhoo
 - Whether the remaining rooming house duplicates are errors or distinct licences.
 - The exact CentrePlan 2050 boundary. Neighbourhoods were matched to the plan's published map by eye; Logan-C.P.R. is the least certain. A GIS file of the boundary would confirm it.
 
+## Why this matters
+
+Business licence data is the kind of source people reach for when they want to measure downtown activity. I used this exact file in an earlier downtown analysis and described it as a record of who is open for business. It isn't: it covers a short list of licensed activities, its "Downtown" label includes surrounding neighbourhoods, and in April its statuses had not been updated after licences expired.
+
+None of that shows up as an error message. The values are well formed; the problem is **undocumented meaning**. There are no field definitions, no licence ID, no changelog and no published redaction rule, so two people can pull the same dataset and honestly report 621, 196 or 5 "active downtown licences" depending on the day and the definition.
+
+That is a governance problem, not a coding one, and it is cheap to fix at the source. The [charter](governance/charter.md) (section 7) lists six controls the City could add, each tied to a gap found here.
+
+## Design decisions
+
+Each choice is logged with its reasons in the [decision log](governance/decision_log.md).
+
+| Decision | Why | Trade-off |
+|---|---|---|
+| Analyze dated snapshots, never the live API (D-003) | Every figure traces to one pull, and two pulls can be compared | Numbers are only as current as the last pull |
+| Keep raw records out of the repo (D-004) | Some licence types include addresses that may belong to individuals | Readers re-pull the data themselves; the April file is identified by its hash |
+| Read every source through one loader and schema | The CSV export and the API use different headers, date formats and missing-field rules | One more layer to maintain |
+| Treat codes as text and join by normalized name (D-006) | Neighbourhood codes lost trailing zeros, and the licence and boundary files share no key; the map script stops on any unmatched name | Name matching depends on spelling, so it is checked on every run |
+| Write definitions down instead of trusting labels (D-007, D-010) | The City defines none of its fields; "Downtown" in the data is wider than the City's own downtown plan | Working definitions are this project's, and are labelled that way |
+| Report "partly downtown" as its own group | Three neighbourhoods are only partly inside CentrePlan 2050, and withheld addresses make them impossible to split | A three-way answer instead of one number |
+| Count exact duplicates but don't call them errors | With no licence ID, a duplicate can't be proven wrong | The duplicate rate is a signal, not a verdict |
+| Compute numbers in code, write meanings by hand | The data dictionary can't drift from the data | Definitions need a human review when the data changes |
+| Show neighbourhood totals only, never licence locations | Privacy, consistent with D-004 | No street-level detail |
+
 ## How it works
 
 ```
