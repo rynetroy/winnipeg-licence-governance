@@ -20,14 +20,13 @@
 
 In April, 1,655 records across the city still said "Issued" after their expiry date. By November that number was 1.
 
-**3. The dataset changed a lot between the two snapshots, with no visible changelog.**
+**3. My November API pull looked very different from the April export, and the portal doesn't say why.**
 
-- History now goes back to 2010 (April started at 2021).
-- Two more licence families and ten more licensed activities appear.
-- Exact duplicate rows fell from 55.8% to 15.6%. Personal sales duplicates went from 3,585 rows to 0.
-- All 436 matched records that were "Issued" but expired in April now show a closed or ceased status.
+- **Status corrections are real source changes.** All 436 matched records that were "Issued" but expired in April now show a closed or ceased status.
+- **The growth may be partly how each file was extracted.** Within the April file's date range, both files hold nearly the same number of distinct records (3,231 versus 3,306). The extra rows are history back to 2010 and two more licence families, which the April export didn't include. Whether the City added them or the April export was a filtered view is NEEDS EVIDENCE.
+- Exact duplicate rows fell from 55.8% to 15.6%. Personal sales duplicates went from 3,585 rows to 0. These could also be an export artifact rather than a fix at the source.
 
-The same dataset ID gave a very different answer seven months apart. Whether the data can be trusted depends on the day it was pulled, and nothing on the portal documents the changes.
+Either way, two people pulling the "same" dataset seven months apart got very different files, and nothing on the portal documents the difference.
 
 **4. The City's own downtown has almost none of these licences.** The licence data's "Downtown" planning area is wider than downtown. CentrePlan 2050, the City's downtown plan bylaw, draws a much tighter boundary. Of November's 196 active licences in the planning area:
 
