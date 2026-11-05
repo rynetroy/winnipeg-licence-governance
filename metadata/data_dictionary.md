@@ -155,7 +155,7 @@ City neighbourhood name.
 - **Blank:** 0 rows (0.0%)  |  **Distinct:** 125
 - **Observed:** 125 distinct values (not listed)
 - **Check on this snapshot:** names with more than one code: 1
-- **Known issues:** One-to-one with neighbourhood_number except where the code lost its trailing zero.
+- **Known issues:** One-to-one with neighbourhood_number except where the code lost its trailing zero. Spelling differs from the City's neighbourhood boundary file in places (for example 'PORTAGE- ELLICE' versus 'Portage-Ellice'), so joins need names normalized.
 - **Quality dimensions:** Consistency
 
 ### `electoral_ward`
@@ -173,14 +173,14 @@ City Council electoral ward.
 
 ### `community_characterization_area`
 
-City planning area. This project uses 'Downtown' here as its definition of downtown.
+City planning area. Its 'Downtown' value covers downtown and surrounding neighbourhoods; this project's definition of downtown comes from CentrePlan 2050 instead (decision D-010).
 
 - **Names:** CSV `Community Characterization Area`, API `community_characterization_area` (text)
 - **Format rule:** One of the observed area names.
 - **Sensitivity:** Public
 - **Blank:** 0 rows (0.0%)  |  **Distinct:** 13
 - **Observed:** Downtown (5,849); Point Douglas (2,462); St Boniface (1,592); West End (1,540); River Heights (1,210); River East (248); St James Assiniboia (222); St Vital (180); Inkster (146); Transcona (127); Seven Oaks (116); Fort Garry (101); Assiniboine South (32)
-- **Known issues:** Not stated whether the area is as of the licence date or today. 'Downtown' here may not match other downtown boundaries, such as the Downtown BIZ (NEEDS EVIDENCE).
+- **Known issues:** Not stated whether the area is as of the licence date or today. 'Downtown' here is much wider than the CentrePlan 2050 downtown (see metadata/downtown_definitions.csv). Neighbourhoods with no licence records never appear, so the data alone cannot list which neighbourhoods an area contains.
 - **Quality dimensions:** Consistency
 
 ### `location`
