@@ -1,0 +1,97 @@
+{
+  "dataset_id": "d5k3-sfzx",
+  "endpoint": "https://data.winnipeg.ca/resource/d5k3-sfzx.json",
+  "pulled_at_utc": "2026-11-04T21:31:18.711613+00:00",
+  "rows_expected": 13825,
+  "rows_received": 13825,
+  "complete": true,
+  "used_app_token": false,
+  "dataset_metadata": {
+    "name": "Business Licenses",
+    "description": "The City of Winnipeg licenses 12 business activities through the Community Safety Business Licencing By-law (https://winnipeg.ca/CLKDMIS/DocExt/ViewDoc.asp?DocumentTypeId=1&DocId=4222&DocType=C). Each activity requires one or more permits or approvals from other City of Winnipeg departments. Licensing provides protection and support within the community by regulating and controlling various activities where there is a risk or danger to the public’s health or safety. Licensing also assists in crime prevention.",
+    "category": "Neighbourhood Liveability, Property Standards, & Licensing",
+    "attribution": null,
+    "rows_updated_at": "2026-11-01T11:42:48+00:00",
+    "view_last_modified": "2026-11-01T11:42:44+00:00",
+    "columns": [
+      {
+        "field_name": "folder_type",
+        "display_name": "Folder Type",
+        "data_type": "text",
+        "description": ""
+      },
+      {
+        "field_name": "folder_description",
+        "display_name": "Folder Description",
+        "data_type": "text",
+        "description": ""
+      },
+      {
+        "field_name": "subdescription",
+        "display_name": "Subdescription",
+        "data_type": "text",
+        "description": ""
+      },
+      {
+        "field_name": "trade_name",
+        "display_name": "Trade Name",
+        "data_type": "text",
+        "description": ""
+      },
+      {
+        "field_name": "address",
+        "display_name": "Address",
+        "data_type": "text",
+        "description": ""
+      },
+      {
+        "field_name": "issue_date",
+        "display_name": "Issue Date",
+        "data_type": "calendar_date",
+        "description": ""
+      },
+      {
+        "field_name": "expiry_date",
+        "display_name": "Expiry Date",
+        "data_type": "calendar_date",
+        "description": ""
+      },
+      {
+        "field_name": "status",
+        "display_name": "Status",
+        "data_type": "text",
+        "description": ""
+      },
+      {
+        "field_name": "neighbourhood_number",
+        "display_name": "Neighbourhood Number",
+        "data_type": "number",
+        "description": ""
+      },
+      {
+        "field_name": "neighbourhood_name",
+        "display_name": "Neighbourhood Name",
+        "data_type": "text",
+        "description": ""
+      },
+      {
+        "field_name": "electoral_ward",
+        "display_name": "Electoral Ward",
+        "data_type": "text",
+        "description": ""
+      },
+      {
+        "field_name": "community_characterization_area",
+        "display_name": "Community Characterization Area",
+        "data_type": "text",
+        "description": ""
+      },
+      {
+        "field_name": "location",
+        "display_name": "Location",
+        "data_type": "text",
+        "description": ""
+      }
+    ]
+  }
+}
