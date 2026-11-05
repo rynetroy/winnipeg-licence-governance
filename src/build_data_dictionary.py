@@ -108,6 +108,10 @@ def main(snapshot_path: str, snapshot_date: str) -> None:
         "**City definitions:** the portal publishes no description for any of the 13 fields. "
         "Definitions below are this project's working definitions, based on field names, "
         "observed values and the dataset description.\n",
+"**Grain:** not documented by the City. What one row represents (a licence, a renewal, or a licence "
+        "on a given date) is unknown, so exact duplicates cannot be judged as errors (decision D-011, issue I-008).\n",
+        "**Metadata types in this project:** business (`field_definitions.csv`, `downtown_definitions.csv`), "
+        "technical (`field_mapping.csv`), operational (`pull_metadata.json`, profile reports).\n",
         "**Sensitivity** (this project's proposed classification, not the City's):\n",
         "- **Public**: safe to publish row by row.",
         "- **Sensitive**: could identify an individual or a home. Publish aggregated counts only.\n",

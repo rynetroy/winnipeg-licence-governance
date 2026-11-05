@@ -114,6 +114,11 @@ def main() -> None:
     dataset_meta = fetch_dataset_metadata()
 
     complete = len(records) == expected
+    if not complete:
+        # D-013: an incomplete pull is kept for investigation but never accepted.
+        out_dir = out_dir.with_name(out_dir.name + "_incomplete")
+        if out_dir.exists():
+            sys.exit(f"{out_dir} already exists. Snapshots are never overwritten.")
     out_dir.mkdir(parents=True)
     (out_dir / "business_licenses.json").write_text(
         json.dumps(records, ensure_ascii=False), encoding="utf-8")
@@ -131,7 +136,10 @@ def main() -> None:
     print(f"Saved {len(records)} rows to {out_dir}")
     if not complete:
         print(f"WARNING: expected {expected} rows but received {len(records)}. "
-              "Treat this snapshot as incomplete.")
+              "Saved with the _incomplete suffix; load_snapshot.py will refuse it.")
+    else:
+        print("Complete. Add it to governance/snapshots.md and copy pull_metadata.json "
+              "to governance/pull_metadata/ (D-014).")
 
 
 if __name__ == "__main__":

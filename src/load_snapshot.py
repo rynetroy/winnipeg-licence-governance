@@ -46,6 +46,10 @@ def load_snapshot(path: str) -> pd.DataFrame:
     canonical = mapping["canonical_name"].tolist()
 
     if path.is_dir():
+        # D-013: refuse a pull that failed its row-count check.
+        meta_path = path / "pull_metadata.json"
+        if meta_path.exists() and not json.loads(meta_path.read_text(encoding="utf-8")).get("complete", False):
+            raise ValueError(f"{path} is marked incomplete in pull_metadata.json and is not accepted (D-013).")
         # API snapshot folder. The API leaves out fields that are empty,
         # so reindex adds them back as blank columns.
         records = json.loads((path / "business_licenses.json").read_text(encoding="utf-8"))
