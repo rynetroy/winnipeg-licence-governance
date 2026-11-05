@@ -4,6 +4,10 @@ Source: City of Winnipeg Open Data, dataset `d5k3-sfzx`. Figures computed from s
 
 **City definitions:** the portal publishes no description for any of the 13 fields. Definitions below are this project's working definitions, based on field names, observed values and the dataset description.
 
+**Grain:** not documented by the City. What one row represents (a licence, a renewal, or a licence on a given date) is unknown, so exact duplicates cannot be judged as errors (decision D-011, issue I-008).
+
+**Metadata types in this project:** business (`field_definitions.csv`, `downtown_definitions.csv`), technical (`field_mapping.csv`), operational (`pull_metadata.json`, profile reports).
+
 **Sensitivity** (this project's proposed classification, not the City's):
 
 - **Public**: safe to publish row by row.
