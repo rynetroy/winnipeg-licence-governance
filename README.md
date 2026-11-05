@@ -95,7 +95,11 @@ City open data API ──► ingest_api.py ──► dated raw snapshot (local o
 
 Reports show counts only. Raw data is not stored in this repo; see [data/README.md](data/README.md).
 
-Governance: [charter](governance/charter.md), [RACI](governance/raci.md) and [decision log](governance/decision_log.md).
+Governance: [charter](governance/charter.md), [RACI](governance/raci.md), [decision log](governance/decision_log.md), [issue log](governance/issue_log.md) and [snapshot register](governance/snapshots.md). Quality: [rules](quality/quality_rules.md).
+
+**Metadata types:** business metadata in `field_definitions.csv` and `downtown_definitions.csv`, technical metadata in `field_mapping.csv` (a source-to-target spec with transformation, validation and error handling), operational metadata in `pull_metadata.json` and the profile reports. The diagram above is **as-designed** lineage; the snapshot register and pull metadata are the evidence of what actually ran.
+
+**Grain:** the City does not document what one row represents, so it is recorded as unknown (D-011). This is why exact duplicates are counted but not called errors.
 
 ## Run it
 
@@ -113,12 +117,17 @@ python src/profile_extract.py data/raw/api_YYYYMMDD YYYY-MM-DD
 | API ingestion with immutable snapshots | Data Integration | Done (first version) |
 | Data dictionary | Metadata Management | Done |
 | Governance charter, RACI, decision log | Data Governance | Done (v0.1) |
-| Quality rules, scorecard, issue log | Data Quality | Next |
+| Quality rules and issue log | Data Quality | Done (v0.1; three rules not yet computed) |
+| Quality scorecard | Data Quality | Next |
 | Business glossary and lineage diagram | Metadata Management | Phase 2 |
-| Reference codes and golden record matching | Reference & Master Data | Phase 2 |
+| Reference code lists (families, activities, statuses, downtown groups) with versions and effective dates | Reference & Master Data | Phase 2 |
+| Record matching: deterministic rules, steward review and match-link only (no auto-merge, since redacted addresses make false positives likely) | Reference & Master Data | Phase 2 |
 | Field classification and access matrix | Data Security | Phase 2 |
 | Conceptual, logical and physical model | Data Modeling & Design | Phase 2 |
 | Power BI quality scorecard and insight page | DW & BI | Phase 2 |
+| Pipeline and storage architecture (the diagram above, documented) | Data Architecture | Phase 2 |
+| Snapshot retention rule | Data Storage & Operations | Done (snapshot register) |
+| Document and Content Management | | Out of scope (no documents or unstructured content in the source) |
 
 ## Source
 
