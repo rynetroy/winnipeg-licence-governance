@@ -1,6 +1,6 @@
 # Winnipeg Business Licence Data Governance
 
-> **Status: work in progress (Phase 1 of 3).** Personal portfolio project on public data. Not affiliated with or endorsed by the City of Winnipeg.
+> **Status: Phase 1 done; Phase 2 in progress (of 3).** Personal portfolio project on public data. Not affiliated with or endorsed by the City of Winnipeg.
 
 **Question:** Can the City of Winnipeg's business licence open data be trusted to count active licensed businesses downtown, what would it take to make it trustworthy, and what can it never tell you?
 
@@ -23,7 +23,7 @@ In April, 1,655 records across the city still said "Issued" after their expiry d
 **3. My November API pull looked very different from the April export, and the portal doesn't say why.**
 
 - **Status corrections are real source changes.** All 436 matched records that were "Issued" but expired in April now show a closed or ceased status.
-- **The growth may be partly how each file was extracted.** Within the April file's date range, both files hold nearly the same number of distinct records (3,231 versus 3,306). The extra rows are history back to 2010 and two more licence families, which the April export didn't include. Whether the City added them or the April export was a filtered view is unconfirmed.
+- **The growth may be partly how each file was extracted.** Within the April file's date range, both files hold nearly the same number of distinct records (3,231 versus 3,306). The extra rows are history back to 2010 and two more licence families, which the April export didn't include. Whether the City added them or the April export was a filtered view is NEEDS EVIDENCE.
 - Exact duplicate rows fell from 55.8% to 15.6%. Personal sales duplicates went from 3,585 rows to 0. These could also be an export artifact rather than a fix at the source.
 
 Either way, two people pulling the "same" dataset seven months apart got very different files, and nothing on the portal documents the difference.
@@ -42,7 +42,7 @@ Either way, two people pulling the "same" dataset seven months apart got very di
 
 Exact numbers by neighbourhood: [chart](reports/figures/downtown_by_neighbourhood.png) and [table](reports/downtown_by_neighbourhood.csv). Group membership: [downtown_definitions.csv](metadata/downtown_definitions.csv).
 
-**Not yet proven:**
+**Not yet proven (NEEDS EVIDENCE):**
 - Why the April duplicates existed. With no licence number in the data, an exact duplicate can't be confirmed as an error. Rooming house addresses are redacted, so separate rooming houses can look identical.
 - Whether the remaining rooming house duplicates are errors or distinct licences.
 - The exact CentrePlan 2050 boundary. Neighbourhoods were matched to the plan's published map by eye; Logan-C.P.R. is the least certain. A GIS file of the boundary would confirm it.
@@ -74,17 +74,21 @@ Each choice is logged with its reasons in the [decision log](governance/decision
 ## How it works
 
 ```
-City open data API ──► ingest_api.py ──► dated raw snapshot (local only)
-                                               │
-                       load_snapshot.py  ◄───────┘  (also reads the April CSV)
-                           │
-         ┌─────────────────┴──────────────────┐
- profile_extract.py                   compare_snapshots.py
-         │                                    │
- reports/profile_*.md            reports/compare_*.md
+City open data API ─► ingest_api.py ─► dated snapshot (local only) ─┐
+April CSV export (earlier project) ─────────────────────────────────┤
+                                                                    │
+load_snapshot.py  ◄─────────────────────────────────────────────────┘
+   │
+   ├─► profile_extract.py ........... reports/profile_*.md
+   ├─► compare_snapshots.py ......... reports/compare_*.md
+   ├─► make_figures.py .............. reports/figures/downtown_funnel.png
+   ├─► build_data_dictionary.py ..... metadata/data_dictionary.*
+   └─► make_map.py .................. reports/figures/downtown_map.png + table
+          ▲
+          └── neighbourhood boundaries + metadata/downtown_definitions.csv
 ```
 
-- `src/ingest_api.py` pulls the full dataset from the City's API, checks the row count, and saves a dated snapshot that is never overwritten.
+- `src/ingest_api.py` pulls the full dataset from the City's API, checks the row count, and saves a dated snapshot that is never overwritten. An incomplete pull is saved as incomplete and the loader refuses it (D-013).
 - `src/load_snapshot.py` reads either the API snapshot or a CSV export into one standard format, using `metadata/field_mapping.csv`.
 - `src/profile_extract.py` profiles one snapshot.
 - `src/compare_snapshots.py` compares two snapshots.
@@ -102,24 +106,30 @@ Governance: [charter](governance/charter.md), [RACI](governance/raci.md), [decis
 
 ## Run it
 
+See [data/README.md](data/README.md) for getting the snapshots and boundary file first.
+
 ```bash
 pip install -r requirements.txt
 python src/ingest_api.py
 python src/profile_extract.py data/raw/api_YYYYMMDD YYYY-MM-DD
+python src/compare_snapshots.py data/raw/Business_Licenses_20260404.csv 2026-04-04 data/raw/api_YYYYMMDD YYYY-MM-DD
+python src/build_data_dictionary.py data/raw/api_YYYYMMDD YYYY-MM-DD
+python src/make_figures.py data/raw/Business_Licenses_20260404.csv 2026-04-04 data/raw/api_YYYYMMDD YYYY-MM-DD
+python src/make_map.py data/raw/Business_Licenses_20260404.csv 2026-04-04 data/raw/api_YYYYMMDD YYYY-MM-DD data/raw/geo_neighbourhoods_csv/Neighbourhoods_YYYYMMDD.csv
 ```
 
 ## Roadmap (DAMA-DMBOK knowledge areas)
 
 | Deliverable | Knowledge area | Status |
 |---|---|---|
-| **Phase 1: Foundation & Baseline Audit** | | |
+| **Phase 1: Foundation and baseline audit** | | |
 | Profiling and snapshot comparison | Data Quality | Done |
 | API ingestion with immutable snapshots | Data Integration | Done (first version) |
 | Data dictionary | Metadata Management | Done |
 | Governance charter, RACI, decision log | Data Governance | Done (v0.1) |
 | Quality rules and issue log | Data Quality | Done (v0.1; three rules not yet computed) |
 | Snapshot retention rule | Data Storage & Operations | Done (snapshot register) |
-| **Phase 2: Governance Artifacts & BI Layer** | | |
+| **Phase 2: Governance artifacts and BI layer** | | |
 | Quality scorecard | Data Quality | Next |
 | Business glossary and lineage diagram | Metadata Management | Phase 2 |
 | Reference code lists (families, activities, statuses, downtown groups) with versions and effective dates | Reference & Master Data | Phase 2 |
@@ -128,13 +138,13 @@ python src/profile_extract.py data/raw/api_YYYYMMDD YYYY-MM-DD
 | Conceptual, logical and physical model | Data Modeling & Design | Phase 2 |
 | Power BI quality scorecard and insight page | DW & BI | Phase 2 |
 | Pipeline and storage architecture (the diagram above, documented) | Data Architecture | Phase 2 |
-| **Phase 3: Analytics Engineering & Automated Testing Gates** | | |
-| `dbt-duckdb` ELT transformation pipeline (staging, intermediate, and dimensional marts) | Data Integration & Modeling | Phase 3 |
-| Automated data quality gates in dbt (schema constraints, null checks, accepted value assertions) | Data Quality | Phase 3 |
-| Custom singular assertions (validity tests catching expired "Issued" licences and spatial boundary drift) | Data Quality | Phase 3 |
-| Dynamic data lineage graph (DAG) and self-documenting catalog via dbt docs | Metadata Management | Phase 3 |
-| CI/CD testing workflow (automated test assertions executing on pull requests) | Data Architecture | Phase 3 |
-| **Out of Scope** | | |
+| **Phase 3: Automated quality gates (planned)** | | |
+| `dbt-duckdb` models: staging, intermediate and reporting layers | Data Integration & Modeling | Phase 3 |
+| Quality rules as dbt tests: not null, accepted values, unique keys where they exist | Data Quality | Phase 3 |
+| Custom tests from the rule list: no "Issued" licence past expiry; every planning-area neighbourhood has a downtown group | Data Quality | Phase 3 |
+| Generated lineage graph and catalog with dbt docs (as-implemented lineage) | Metadata Management | Phase 3 |
+| Tests run on every pull request in GitHub Actions, against a small synthetic fixture dataset (raw data stays out of the repo) | Data Storage & Operations | Phase 3 |
+| **Out of scope** | | |
 | Document and Content Management | | Out of scope (no documents or unstructured content in the source) |
 
 ## Source
